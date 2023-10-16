@@ -1,0 +1,30 @@
+{
+  "name": "blog_post",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Isaacbrain/Blog_post.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Isaacbrain/Blog_post/issues"
+  },
+  "homepage": "https://github.com/Isaacbrain/Blog_post#readme",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "epress": "^0.0.1-security",
+    "express": "^4.18.2",
+    "mysql2": "^3.6.2",
+    "nodemon": "^3.0.1",
+    "sequelize": "^6.33.0"
+  }
+}
