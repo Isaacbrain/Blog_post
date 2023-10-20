@@ -5,9 +5,10 @@ import authUser from "../middleware/authUser.js";
 import postController from "../controllers/postController.js";
 
 const router = express.Router();
+router.get("/posts", authUser.tokenVerification, userController.userPosts);
 router.post(
   "/login",
-  authUser,
+  authUser.userInfo,
   userController.loginUser,
   postController.getAllPost
 );

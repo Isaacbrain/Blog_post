@@ -20,7 +20,7 @@ const registerUser = async (req, res) => {
     // const token = createToken(newUser.id);
     // res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
     if (newUser) {
-      return res.status(201).json({ message: "Succesful", user: newUser.id });
+      return res.status(201).json({ message: "Succesful", user: newUser });
     }
   } catch (error) {
     console.log(error);
@@ -109,6 +109,19 @@ const deleteUser = async (req, res) => {
     return res.status(500).json({ message: "server not found" });
   }
 };
+//user post
+const userPosts = async (req, res) => {
+  const userId = req.userId;
+  console.log("&&&&&&", userId);
+  const posts = await postModel.findAll({ where: { user_id: userId } });
+  const user = await userModel.findOne({
+    where: { id: userId },
+    attributes: {
+      exclude: ["password", "id", "createdAt", "updatedAt", "deletedAt"],
+    },
+  });
+  res.status(200).json({ user, data: posts });
+};
 
 export default {
   registerUser,
@@ -117,4 +130,5 @@ export default {
   updateUser,
   deleteUser,
   loginUser,
+  userPosts,
 };

@@ -4,10 +4,10 @@ import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 
 dotenv.config();
+const jwtSecret = process.env.TOKEN_SECRET;
 
 const userInfo = async (req, res, next) => {
   try {
-    const jwtSecret = process.env.TOKEN_SECRET;
     const tokenDuration = process.env.TOKEN_DURATION;
     const loginInfo = req.body;
     const email = loginInfo.email;
@@ -23,6 +23,7 @@ const userInfo = async (req, res, next) => {
       return res.status(401).json({ message: "Invalid Credentials" });
     }
     const tokenVariables = {
+      id: findUser.id,
       email: loginInfo.email,
       username: loginInfo.username,
     };
@@ -38,7 +39,19 @@ const userInfo = async (req, res, next) => {
   }
 };
 
-export default userInfo;
+//verfiy
+const tokenVerification = async (req, res, next) => {
+  const token = req.headers.token;
+  if (!token) {
+    return res.status(404).json({ message: "no token existing" });
+  }
+  const verifying = jwt.verify(token, jwtSecret);
+  req.userId = verifying.id;
+  console.log("****************", verifying.id);
+  next();
+};
+
+export default { userInfo, tokenVerification };
 
 // const maxAge = 3 * 24 * 60 * 60;
 // const createToken = (id) => {

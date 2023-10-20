@@ -7,9 +7,12 @@ import likeModel from "../models/likeModel.js";
 // create a post
 const registerPost = async (req, res) => {
   try {
-    const Title = req.body.title;
+    const slugTitle = req.body.title;
     const addPost = req.body;
-    addPost.slug = Title.toLowerCase()
+    const userId = req.userId;
+    addPost.user_id = userId;
+    addPost.slug = slugTitle
+      .toLowerCase()
       .trim()
       .replace(/\s+/g, "-")
       .replace(/[^a-z0-9-]/g, "")
@@ -52,7 +55,7 @@ const getPost = async (req, res) => {
 const getAllPost = async (req, res) => {
   try {
     const userId = req.params.user_id;
-    console.log("user_id", userId);
+    // console.log("user_id", userId);
     const allPost = await postModel.findAll({
       include: [
         {
